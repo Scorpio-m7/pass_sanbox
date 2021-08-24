@@ -30,3 +30,5 @@ Payload has write to shellcode_img1.jpg
 python2.7运行上线cs
 
 可以使用pyinstalller打包成exe，替换windows图片混淆
+
+得到shell后可以远程调用ps脚本欺骗用户卸载杀软，注意使用sublime修改编码格式为gbk
